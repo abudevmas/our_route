@@ -52,6 +52,12 @@ button:hover,.map-link:hover{background:#1d4ed8;}
 .plan-meta{color:#475569;font-size:14px;}
 .plan-row:last-child{border-bottom:none;}
 #map{height:520px;width:100%;border-radius:15px;overflow:hidden;}
+.map-shell{perspective:1000px;}
+.map-card{background:white;border-radius:18px;padding:12px;box-shadow:0 14px 30px rgba(15,23,42,0.16);border:1px solid #e2e8f0;transform:rotateX(1deg) rotateY(-1deg);}
+.route-step-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;}
+.route-step{padding:10px 12px;border-radius:10px;background:#eff6ff;border-left:4px solid #2563eb;font-size:14px;}
+.route-step strong{display:block;margin-bottom:4px;}
+.route-step small{color:#475569;}
 footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
 @media (max-width:700px){.plan-row{grid-template-columns:1fr;}}
 </style>
@@ -112,7 +118,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-9220066</p>
       <p><b>Location:</b> Susan Road, Madina Town</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Social%20Security%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Social+Security+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -123,7 +129,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-9200132</p>
       <p><b>Location:</b> Mall Road</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=DHQ%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=DHQ+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -134,7 +140,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Phone:</b> 041-8780910</p>
       <p><b>Location:</b> Gulistan Colony</p>
       <span class="tag">Clinical Psychology Relevant</span>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Aziz%20Fatimah%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Aziz+Fatimah+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -144,7 +150,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Psychiatrist:</b> Available</p>
       <p><b>Phone:</b> 041-5068065</p>
       <p><b>Hours:</b> By Appointment</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Lyallpur%20Executive%20Clinic%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Lyallpur+Executive+Clinic+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -154,7 +160,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-9210095</p>
       <p><b>Location:</b> Jail Road</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Allied%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Allied+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -164,7 +170,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Psychologists:</b> Available</p>
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-8401364</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Mujahid%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Mujahid+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -174,7 +180,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-8869862</p>
       <p><b>Distance:</b> 9.5 KM</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Madinah%20Teaching%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Madinah+Teaching+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -184,7 +190,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Hours:</b> 24/7</p>
       <p><b>Phone:</b> 041-8740951</p>
       <p><b>Distance:</b> 20.2 KM</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=Shifa%20International%20Hospital%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Shifa+International+Hospital+Faisalabad">Open Map</a>
     </div>
 
     <div class="card facility">
@@ -194,7 +200,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
       <p><b>Location:</b> Gulberg, Faisalabad</p>
       <p><b>Purpose:</b> Final hospital visit in the route plan</p>
       <p><b>Note:</b> Confirm latest contact details before visiting</p>
-      <a class="map-link" target="_blank" href="https://www.openstreetmap.org/search?query=National%20Hospital%20Gulberg%20Faisalabad">Open Map</a>
+      <a class="map-link" target="_blank" href="https://www.google.com/maps/search/?api=1&query=National+Hospital+Gulberg+Faisalabad">Open Map</a>
     </div>
   </div>
 
@@ -221,8 +227,27 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
 
   <div class="route-section">
     <h2>Interactive Route Map</h2>
-    <p>This map uses OpenStreetMap instead of a Google iframe, so it displays correctly without the frame restriction.</p>
-    <div id="map"></div>
+    <p>This route view is styled like a numbered, 3D-style map panel and each stop opens directly in Google Maps.</p>
+    <div class="map-shell">
+      <div class="map-card">
+        <div class="planner-actions" style="margin-bottom:10px;">
+          <a class="map-link" target="_blank" href="https://www.google.com/maps/dir/Kohinoor+Faisalabad/Social+Security+Hospital+Faisalabad/DHQ+Hospital+Faisalabad/Aziz+Fatimah+Hospital+Faisalabad/Allied+Hospital+Faisalabad/Lyallpur+Executive+Clinic+Faisalabad/Mujahid+Hospital+Faisalabad/Madinah+Teaching+Hospital+Faisalabad/Shifa+International+Hospital+Faisalabad/National+Hospital+Gulberg+Faisalabad">Open full route in Google Maps</a>
+        </div>
+        <div id="map"></div>
+      </div>
+    </div>
+    <div class="route-step-list">
+      <div class="route-step"><strong>1. Start</strong><small>Kohinoor</small></div>
+      <div class="route-step"><strong>2. Visit</strong><small>Social Security Hospital</small></div>
+      <div class="route-step"><strong>3. Visit</strong><small>DHQ Hospital</small></div>
+      <div class="route-step"><strong>4. Visit</strong><small>Aziz Fatimah Hospital</small></div>
+      <div class="route-step"><strong>5. Visit</strong><small>Allied Hospital</small></div>
+      <div class="route-step"><strong>6. Visit</strong><small>Lyallpur Executive Clinic</small></div>
+      <div class="route-step"><strong>7. Visit</strong><small>Mujahid Hospital</small></div>
+      <div class="route-step"><strong>8. Visit</strong><small>Madinah Teaching Hospital</small></div>
+      <div class="route-step"><strong>9. Visit</strong><small>Shifa International Hospital</small></div>
+      <div class="route-step"><strong>10. Finish</strong><small>National Hospital, Gulberg</small></div>
+    </div>
   </div>
 </div>
 
@@ -413,8 +438,9 @@ L.polyline(routeCoordinates, { color: '#2563eb', weight: 4, opacity: 0.8 }).addT
 
 routeStops.forEach((stop, index) => {
   const marker = L.marker([stop.lat, stop.lng]).addTo(map);
-  const label = index === 0 ? 'Start' : `${index}. ${stop.name}`;
-  marker.bindPopup(`<strong>${label}</strong><br>${stop.name}`);
+  const label = index === 0 ? '1. Start' : `${index + 1}. ${stop.name}`;
+  const googleLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.name + ' Faisalabad')}`;
+  marker.bindPopup(`<strong>${label}</strong><br>${stop.name}<br><a href="${googleLink}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>`);
 });
 
 renderPlanner();
