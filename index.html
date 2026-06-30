@@ -65,7 +65,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
 <body>
 <header>
   <h1>Clinical Psychology Hospital Survey Route</h1>
-  <p>Starting Point: Kohinoor, Faisalabad</p>
+  <p>Starting Point: Chenab Chowk, Faisalabad</p>
 </header>
 
 <div class="container">
@@ -80,7 +80,7 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
     </div>
     <div class="stat">
       <h4>Starting Point</h4>
-      <h2>Kohinoor</h2>
+      <h2>Chenab Chowk</h2>
     </div>
     <div class="stat">
       <h4>Completion</h4>
@@ -94,19 +94,8 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
   </div>
 
   <div class="route-section">
-    <h2>Recommended Route (Kohinoor to Gulberg with Minimal Travel)</h2>
-    <div class="timeline">
-      <div class="step"><strong>Start:</strong> Kohinoor</div>
-      <div class="step">Social Security Hospital</div>
-      <div class="step">DHQ Hospital</div>
-      <div class="step">Aziz Fatimah Hospital</div>
-      <div class="step">Allied Hospital</div>
-      <div class="step">Lyallpur Executive Clinic</div>
-      <div class="step">Mujahid Hospital</div>
-      <div class="step">Madinah Teaching Hospital</div>
-      <div class="step">Shifa International Hospital</div>
-      <div class="step"><strong>Final Stop:</strong> National Hospital, Gulberg</div>
-    </div>
+    <h2>Recommended Route (Chenab Chowk to Gulberg with Minimal Travel)</h2>
+    <div class="timeline" id="routeTimeline"></div>
   </div>
 
   <div class="cards" id="facilityContainer">
@@ -231,23 +220,12 @@ footer{text-align:center;padding:30px;margin-top:30px;color:#555;}
     <div class="map-shell">
       <div class="map-card">
         <div class="planner-actions" style="margin-bottom:10px;">
-          <a class="map-link" target="_blank" href="https://www.google.com/maps/dir/Kohinoor+Faisalabad/Social+Security+Hospital+Faisalabad/DHQ+Hospital+Faisalabad/Aziz+Fatimah+Hospital+Faisalabad/Allied+Hospital+Faisalabad/Lyallpur+Executive+Clinic+Faisalabad/Mujahid+Hospital+Faisalabad/Madinah+Teaching+Hospital+Faisalabad/Shifa+International+Hospital+Faisalabad/National+Hospital+Gulberg+Faisalabad">Open full route in Google Maps</a>
+          <a class="map-link" id="directionsLink" target="_blank" href="#">Open full route in Google Maps</a>
         </div>
         <div id="map"></div>
       </div>
     </div>
-    <div class="route-step-list">
-      <div class="route-step"><strong>1. Start</strong><small>Kohinoor</small></div>
-      <div class="route-step"><strong>2. Visit</strong><small>Social Security Hospital</small></div>
-      <div class="route-step"><strong>3. Visit</strong><small>DHQ Hospital</small></div>
-      <div class="route-step"><strong>4. Visit</strong><small>Aziz Fatimah Hospital</small></div>
-      <div class="route-step"><strong>5. Visit</strong><small>Allied Hospital</small></div>
-      <div class="route-step"><strong>6. Visit</strong><small>Lyallpur Executive Clinic</small></div>
-      <div class="route-step"><strong>7. Visit</strong><small>Mujahid Hospital</small></div>
-      <div class="route-step"><strong>8. Visit</strong><small>Madinah Teaching Hospital</small></div>
-      <div class="route-step"><strong>9. Visit</strong><small>Shifa International Hospital</small></div>
-      <div class="route-step"><strong>10. Finish</strong><small>National Hospital, Gulberg</small></div>
-    </div>
+    <div class="route-step-list" id="routeStepList"></div>
   </div>
 </div>
 
@@ -267,7 +245,7 @@ const plannerNotes = document.getElementById('plannerNotes');
 const downloadPlanBtn = document.getElementById('downloadPlanBtn');
 
 const routeStops = [
-  { name: 'Kohinoor', lat: 31.4224, lng: 73.0910, kind: 'start' },
+  { name: 'Chenab Chowk', lat: 31.4134064, lng: 73.0676533, kind: 'start' },
   { name: 'Social Security Hospital', lat: 31.4294, lng: 73.1001, kind: 'stop' },
   { name: 'DHQ Hospital', lat: 31.4205, lng: 73.0790, kind: 'stop' },
   { name: 'Aziz Fatimah Hospital', lat: 31.4268, lng: 73.0891, kind: 'stop' },
@@ -276,8 +254,68 @@ const routeStops = [
   { name: 'Mujahid Hospital', lat: 31.4349, lng: 73.0712, kind: 'stop' },
   { name: 'Madinah Teaching Hospital', lat: 31.4385, lng: 73.1176, kind: 'stop' },
   { name: 'Shifa International Hospital', lat: 31.4040, lng: 73.1164, kind: 'stop' },
-  { name: 'National Hospital, Gulberg', lat: 31.5212, lng: 73.0801, kind: 'stop' }
+  { name: 'National Hospital, Gulberg', lat: 31.5212, lng: 73.0801, kind: 'end' }
 ];
+
+function getDistance(a, b) {
+  const lat1 = a.lat * Math.PI / 180;
+  const lat2 = b.lat * Math.PI / 180;
+  const dLat = lat2 - lat1;
+  const dLng = (b.lng - a.lng) * Math.PI / 180;
+  const x = dLng * Math.cos((lat1 + lat2) / 2);
+  return Math.sqrt(dLat * dLat + x * x) * 6371;
+}
+
+function computeRouteOrder(stops) {
+  const start = stops.find(stop => stop.kind === 'start');
+  const end = stops.find(stop => stop.kind === 'end');
+  const remaining = stops.filter(stop => stop.kind === 'stop');
+  const ordered = [start];
+  let current = start;
+
+  while (remaining.length) {
+    let nearestIndex = 0;
+    let nearestDist = getDistance(current, remaining[0]);
+    for (let i = 1; i < remaining.length; i++) {
+      const distance = getDistance(current, remaining[i]);
+      if (distance < nearestDist) {
+        nearestDist = distance;
+        nearestIndex = i;
+      }
+    }
+    current = remaining.splice(nearestIndex, 1)[0];
+    ordered.push(current);
+  }
+
+  ordered.push(end);
+  return ordered;
+}
+
+const orderedRouteStops = computeRouteOrder(routeStops);
+const routeTimeline = document.getElementById('routeTimeline');
+const routeStepList = document.getElementById('routeStepList');
+const directionsLink = document.getElementById('directionsLink');
+
+function renderRouteOrder() {
+  if (!routeTimeline || !routeStepList || !directionsLink) return;
+
+  routeTimeline.innerHTML = orderedRouteStops.map((stop, index) => {
+    if (index === 0) {
+      return `<div class="step"><strong>Start:</strong> ${stop.name}</div>`;
+    }
+    if (index === orderedRouteStops.length - 1) {
+      return `<div class="step"><strong>Final Stop:</strong> ${stop.name}</div>`;
+    }
+    return `<div class="step">${stop.name}</div>`;
+  }).join('');
+
+  routeStepList.innerHTML = orderedRouteStops.map((stop, index) => {
+    const label = index === 0 ? 'Start' : index === orderedRouteStops.length - 1 ? 'Finish' : 'Visit';
+    return `<div class="route-step"><strong>${index + 1}. ${label}</strong><small>${stop.name}</small></div>`;
+  }).join('');
+
+  directionsLink.href = `https://www.google.com/maps/dir/${orderedRouteStops.map(stop => encodeURIComponent(stop.name + ' Faisalabad')).join('/')}`;
+}
 
 let plannerState = { startTime: '08:00', stayHours: '1', notes: '', durations: {} };
 const saved = localStorage.getItem('clinicalRoutePlanner');
@@ -331,7 +369,7 @@ function renderPlanner() {
   let currentMinutes = startMinutes;
   let totalMinutes = 0;
 
-  planningList.innerHTML = routeStops.map((stop, index) => {
+  planningList.innerHTML = orderedRouteStops.map((stop, index) => {
     const isStart = stop.kind === 'start';
     const durationHours = parseFloat(plannerState.durations[stop.name] || defaultStay || '1');
     const arrival = minutesToTime(currentMinutes);
@@ -370,7 +408,7 @@ function buildPlanText() {
   lines.push(`Default stay: ${stayHoursInput.value} hour(s)`);
   lines.push('');
 
-  routeStops.forEach((stop, index) => {
+  orderedRouteStops.forEach((stop, index) => {
     const durationHours = parseFloat(plannerState.durations[stop.name] || defaultStay || '1');
     const arrival = minutesToTime(currentMinutes);
     const leave = minutesToTime(currentMinutes + Math.round(durationHours * 60));
@@ -427,22 +465,23 @@ downloadPlanBtn.addEventListener('click', () => {
   URL.revokeObjectURL(link.href);
 });
 
-const map = L.map('map').setView([31.4207, 73.0880], 11);
+const map = L.map('map').setView([31.4180, 73.0790], 12);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-const routeCoordinates = routeStops.map(stop => [stop.lat, stop.lng]);
+const routeCoordinates = orderedRouteStops.map(stop => [stop.lat, stop.lng]);
 L.polyline(routeCoordinates, { color: '#2563eb', weight: 4, opacity: 0.8 }).addTo(map);
 
-routeStops.forEach((stop, index) => {
+orderedRouteStops.forEach((stop, index) => {
   const marker = L.marker([stop.lat, stop.lng]).addTo(map);
   const label = index === 0 ? '1. Start' : `${index + 1}. ${stop.name}`;
   const googleLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.name + ' Faisalabad')}`;
   marker.bindPopup(`<strong>${label}</strong><br>${stop.name}<br><a href="${googleLink}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>`);
 });
 
+renderRouteOrder();
 renderPlanner();
 </script>
 </body>
